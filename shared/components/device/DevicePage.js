@@ -1,4 +1,5 @@
 import React from 'react';
+import DeviceListView from './DeviceListView';
 
 class HomePage extends React.Component {
 
@@ -8,7 +9,7 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <h1>Hello, world!</h1>
+      <DeviceListView />
     );
   }
 }

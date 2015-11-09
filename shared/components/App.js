@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router'
+import { Link, IndexLink } from 'react-router'
+import DeviceActions from '../actions/DeviceActions';
 
 class App extends React.Component {
 
@@ -7,8 +8,8 @@ class App extends React.Component {
     super(props);
   }
 
-  onMenuIconButtonTouchTap() {
-    this.refs.navMenu.toggle();
+  onDeviceLinkClick() {
+    DeviceActions.loadAllDevices();
   }
 
   render() {
@@ -16,8 +17,9 @@ class App extends React.Component {
       <div>
         <h1>App</h1>
         <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/login'>Login (lazy loaded)</Link></li>
+          <li><IndexLink to='/'>Home</IndexLink></li>
+          <li><Link to='/devices' onClick={this.onDeviceLinkClick}>Devices</Link></li>
+          <li><Link to='/auth/login'>Login (lazy loaded)</Link></li>
         </ul>
         {this.props.children}
       </div>

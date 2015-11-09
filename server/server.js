@@ -26,16 +26,24 @@ app.use(bodyParser.json());
 //app.use(serveFavicon(`${assetsPath}/assets/favicon.png`));
 app.use(express.static(assetsPath));
 
-app.use('/', deviceController);
+app.use('/devices', deviceController);
 
 app.get('*', (req, res) => {
   alt.bootstrap(JSON.stringify(res.locals.data || {}));
   var iso = new Iso();
 
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-    const content = renderToString(<RoutingContext {...renderProps} />);
-    iso.add(content, alt.flush());
-    res.render('index', { content: iso.render() });
+    if (error) {
+      res.status(500).send(error.message);
+    } else if (redirectLocation) {
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+    } else if (renderProps) {
+      const content = renderToString(<RoutingContext {...renderProps} />);
+      iso.add(content, alt.flush());
+      res.render('index', { content: iso.render() });
+    } else {
+      res.status(404).send('Not found');
+    }
   });
 });
 
