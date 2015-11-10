@@ -1,26 +1,30 @@
-import alt from '../alt';
-import request from 'superagent';
+import fetch from 'isomorphic-fetch'
 
-class DeviceActions {
+// export function fetchDevices(text) {
+//   return {
+//     type: 'FETCH_DEVICES',
+//     promise: request.get(API_URL)
+//   }
+// }
 
-  loadAllDevices(callback) {
-    var self = this;
-
-    request.get('http://localhost:3000/posts.json', (err, res) => {
-      if (err) throw err;
-
-      self.actions.updateDevices(JSON.parse(res.text));
-
-      if (callback){
-        callback();
-      }
-    });
+export function createDevice(text) {
+  return {
+    type: 'CREATE_DEVICE',
+    text
   }
-
-  updateDevices(devices) {
-    this.dispatch(devices);
-  }
-
 }
 
-export default alt.createActions(DeviceActions);
+export function editDevice(id, text) {
+  return {
+    type: 'EDIT_DEVICE',
+    id,
+    text
+  }
+}
+
+export function deleteDevice(id) {
+  return {
+    type: 'DELETE_DEVICE',
+    id
+  }
+}

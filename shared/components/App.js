@@ -1,15 +1,10 @@
 import React from 'react';
 import { Link, IndexLink } from 'react-router'
-import DeviceActions from '../actions/DeviceActions';
 
 class App extends React.Component {
 
   constructor(props) {
-    super(props);
-  }
-
-  onDeviceLinkClick() {
-    DeviceActions.loadAllDevices();
+    super(props)
   }
 
   render() {
@@ -18,8 +13,8 @@ class App extends React.Component {
         <h1>App</h1>
         <ul>
           <li><IndexLink to='/'>Home</IndexLink></li>
-          <li><Link to='/devices' onClick={this.onDeviceLinkClick}>Devices</Link></li>
-          <li><Link to='/auth/login'>Login (lazy loaded)</Link></li>
+          <li><Link to='/devices'>Devices</Link></li>
+          <li><Link to='/auth/login'>Login</Link></li>
         </ul>
         {this.props.children}
       </div>
@@ -27,4 +22,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default App

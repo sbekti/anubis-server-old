@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 
 class NotFoundPage extends React.Component {
 
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   render() {
     return (
       <div>Not Found!</div>
-    );
+    )
   }
 }
 
-export default NotFoundPage;
+export default NotFoundPage

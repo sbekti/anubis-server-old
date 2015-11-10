@@ -14,6 +14,5 @@ export default (
       <Route path='devices' component={DevicePage} />
     </Route>
     <Route path='auth/login' component={LoginPage} />
-    <Route path='*' component={NotFoundPage} />
   </Route>
 )

@@ -1,41 +1,42 @@
-import React from 'react';
-import DeviceStore from '../../stores/DeviceStore';
-import DeviceItem from './DeviceItem';
+import React from 'react'
+import DeviceItem from './DeviceItem'
 
 class DeviceListView extends React.Component {
 
   constructor(props) {
-    super(props);
-    this.state = DeviceStore.getState();
-    this.onChange = this.onChange.bind(this);
+    super(props)
+
+    this.handleEdit = this.handleEdit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
-  componentDidMount() {
-    DeviceStore.listen(this.onChange);
+  handleEdit(id, text) {
+    this.props.onEdit(id, text)
   }
 
-  componentWillUnmount() {
-    DeviceStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    console.log('Flux store changed');
-    this.setState(state);
+  handleDelete(id) {
+    this.props.onDelete(id)
   }
 
   render() {
-    let devices = this.state.devices.map(function(device) {
-      return (
-        <DeviceItem key={device.id} device={device} />
-      );
-    });
-
     return (
       <div>
-        {devices}
+        {
+          this.props.devices.map(function(device, index) {
+            return (
+              <DeviceItem
+                key={index}
+                id={index}
+                text={device}
+                onEdit={this.handleEdit}
+                onDelete={this.handleDelete}
+              />
+            )
+          }.bind(this))
+        }
       </div>
-    );
+    )
   }
 }
 
-export default DeviceListView;
+export default DeviceListView
