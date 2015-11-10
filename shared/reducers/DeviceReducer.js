@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 const defaultState = new Immutable.List()
 
-export default function deviceReducer(state = defaultState, action) {
+export default function devices(state = defaultState, action) {
 
   switch(action.type) {
     // case 'FETCH_DEVICES':

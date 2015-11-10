@@ -2,16 +2,7 @@ import path from 'path'
 import express from 'express'
 import bodyParser from 'body-parser'
 import serveFavicon from 'serve-favicon'
-
-import React from 'react'
-import { renderToString } from 'react-dom/server'
-import { match, RoutingContext } from 'react-router'
-import createLocation from 'history/lib/createLocation'
-import routes from '../shared/routes'
-
-import { createStore, combineReducers } from 'redux'
-import { Provider } from 'react-redux'
-import * as reducers from '../shared/reducers'
+import www from './middlewares/www'
 
 const app = express()
 
@@ -26,35 +17,8 @@ app.use(bodyParser.json())
 //app.use(serveFavicon(`${assetsPath}/assets/favicon.png`))
 app.use(express.static(path.join(__dirname, '../assets')))
 
-app.get('*', (req, res) => {
-  const location = createLocation(req.url)
-  const reducer = combineReducers(reducers)
-  const store = createStore(reducer)
-
-  match({ routes, location }, (error, redirectLocation, renderProps) => {
-    if (error) {
-      res.status(500).send(error.message)
-    } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-    } else if (renderProps) {
-      const InitialComponent = (
-        <Provider store={store}>
-          <RoutingContext {...renderProps} />
-        </Provider>
-      )
-
-      const component = renderToString(InitialComponent)
-      const initialState = store.getState()
-
-      res.render('index', {
-        component: component,
-        initialState: JSON.stringify(initialState)
-      })
-    } else {
-      res.status(404).send('Not found')
-    }
-  })
-})
+// Frontend middleware
+app.use(www)
 
 app.use((err, req, res, next) => {
   console.log('Error on request %s %s', req.method, req.url)

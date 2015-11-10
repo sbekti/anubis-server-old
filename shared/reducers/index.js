@@ -1,1 +1,8 @@
-export { default as devices } from './DeviceReducer';
+import { combineReducers } from 'redux'
+import devices from './DeviceReducer'
+
+const rootReducer = combineReducers({
+  devices
+})
+
+export default rootReducer
