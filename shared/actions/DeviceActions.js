@@ -1,4 +1,4 @@
-import request from 'isomorphic-fetch'
+import fetch from 'axios'
 
 export function fetchAllDevices(url) {
   console.log('url: ', url)
