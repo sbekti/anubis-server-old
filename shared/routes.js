@@ -10,9 +10,10 @@ import NotFoundPage from './components/common/NotFoundPage';
 export default (
   <Route path='/' component={App}>
     <IndexRoute component={HomePage} />
-    <Route onEnter={AuthUtility.checkCredentials}>
-      <Route path='devices' component={DevicePage} />
-    </Route>
+    <Route path='devices' component={DevicePage}
+      onEnter={AuthUtility.checkCredentials}
+    />
     <Route path='auth/login' component={LoginPage} />
+    <Route path='*' component={NotFoundPage} status={404} />
   </Route>
 )

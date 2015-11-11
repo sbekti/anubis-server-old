@@ -5,8 +5,13 @@ const defaultState = new Immutable.List()
 export default function devices(state = defaultState, action) {
 
   switch(action.type) {
-    // case 'FETCH_DEVICES':
-    //   return state.concat(action.res.data)
+    case 'FETCH_ALL_DEVICE':
+      action.payload.json()
+        .then(json => {
+          console.log(json)
+
+        })
+      return state.concat('lalalalahehe')
     case 'CREATE_DEVICE':
       return state.concat(action.text)
     case 'EDIT_DEVICE':

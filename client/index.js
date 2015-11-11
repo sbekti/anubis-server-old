@@ -6,12 +6,13 @@ import routes from '../shared/routes'
 
 import { Provider } from 'react-redux';
 import configureStore from '../shared/store/configureStore'
+import immutifyState from '../shared/store/immutifyState'
 
 const { pathname, search, hash } = window.location
 const location = `${pathname}${search}${hash}`
 
-const initialState = window.__INITIAL_STATE__;
-const store = configureStore()
+const initialState = immutifyState(window.__INITIAL_STATE__)
+const store = configureStore(initialState)
 
 match({ routes, location }, () => {
   render(

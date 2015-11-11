@@ -2,6 +2,7 @@ import path from 'path'
 import express from 'express'
 import bodyParser from 'body-parser'
 import serveFavicon from 'serve-favicon'
+import api from './middlewares/api'
 import www from './middlewares/www'
 
 const app = express()
@@ -16,6 +17,9 @@ app.set('view engine', 'jade')
 app.use(bodyParser.json())
 //app.use(serveFavicon(`${assetsPath}/assets/favicon.png`))
 app.use(express.static(path.join(__dirname, '../assets')))
+
+// API middleware
+app.use('/api/v1', api)
 
 // Frontend middleware
 app.use(www)

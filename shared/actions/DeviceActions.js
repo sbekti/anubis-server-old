@@ -1,11 +1,13 @@
-import fetch from 'isomorphic-fetch'
+import request from 'isomorphic-fetch'
 
-// export function fetchDevices(text) {
-//   return {
-//     type: 'FETCH_DEVICES',
-//     promise: request.get(API_URL)
-//   }
-// }
+export function fetchAllDevices(url) {
+  console.log('url: ', url)
+
+  return {
+    type: 'FETCH_ALL_DEVICE',
+    payload: fetch(url)
+  }
+}
 
 export function createDevice(text) {
   return {
