@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import devices from './DeviceReducer'
+import device from './DeviceReducer'
 
 const rootReducer = combineReducers({
-  devices
+  device
 })
 
 export default rootReducer

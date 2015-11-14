@@ -17,12 +17,13 @@ app.set('view engine', 'jade')
 app.use(bodyParser.json())
 //app.use(serveFavicon(`${assetsPath}/assets/favicon.png`))
 app.use(express.static(path.join(__dirname, '../assets')))
+app.use(express.static(path.join(__dirname, '../dist')))
 
 // API middleware
 app.use('/api/v1', api)
 
 // Frontend middleware
-app.use(www)
+app.use('/', www)
 
 app.use((err, req, res, next) => {
   console.log('Error on request %s %s', req.method, req.url)

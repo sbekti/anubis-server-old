@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { Link, IndexLink } from 'react-router'
 
 class App extends React.Component {
@@ -18,7 +18,7 @@ class App extends React.Component {
         </ul>
         {this.props.children}
       </div>
-    );
+    )
   }
 }
 

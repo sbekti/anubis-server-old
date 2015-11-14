@@ -6,12 +6,12 @@ import routes from '../shared/routes'
 
 import { Provider } from 'react-redux';
 import configureStore from '../shared/store/configureStore'
-import immutifyState from '../shared/store/immutifyState'
+import rehydrateStore from '../shared/store/rehydrateStore'
 
 const { pathname, search, hash } = window.location
 const location = `${pathname}${search}${hash}`
 
-const initialState = immutifyState(window.__INITIAL_STATE__)
+const initialState = rehydrateStore(window.__INITIAL_STATE__)
 const store = configureStore(initialState)
 
 match({ routes, location }, () => {
@@ -19,6 +19,6 @@ match({ routes, location }, () => {
     <Provider store={store}>
       <Router routes={routes} history={createHistory()} />
     </Provider>,
-    document.getElementById('app')
+    document.getElementById('root')
   )
 })

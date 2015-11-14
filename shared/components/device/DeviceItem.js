@@ -4,17 +4,14 @@ class DeviceItem extends React.Component {
 
   constructor(props) {
     super(props)
-
-    this.handleDelete = this.handleDelete.bind(this)
-    this.handleEdit = this.handleEdit.bind(this)
   }
 
-  handleDelete() {
+  _handleDelete = () => {
     const id = this.props.id
     this.props.onDelete(id)
   }
 
-  handleEdit() {
+  _handleEdit = () => {
     const id = this.props.id
     const currentVal = this.props.text
 
@@ -27,8 +24,8 @@ class DeviceItem extends React.Component {
     return (
       <div>
         {this.props.text}
-        <button onClick={this.handleEdit}>Edit</button>
-        <button onClick={this.handleDelete}>X</button>
+        <button onClick={this._handleEdit}>Edit</button>
+        <button onClick={this._handleDelete}>X</button>
       </div>
     )
   }

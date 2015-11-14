@@ -4,11 +4,9 @@ class DeviceForm extends React.Component {
 
   constructor(props) {
     super(props)
-
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit() {
+  _handleSubmit = () => {
     let node = this.refs['device-input']
     this.props.onSubmit(node.value)
     node.value = ''
@@ -18,7 +16,7 @@ class DeviceForm extends React.Component {
     return (
       <div>
         <input type='text' placeholder='Type device' ref='device-input' />
-        <input type='submit' value='OK!' onClick={this.handleSubmit} />
+        <input type='submit' value='OK!' onClick={this._handleSubmit} />
       </div>
     )
   }

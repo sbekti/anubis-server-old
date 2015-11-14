@@ -7,7 +7,7 @@ import routes from '../../shared/routes'
 import { Provider } from 'react-redux'
 import configureStore from '../../shared/store/configureStore'
 
-import { fetchComponentData } from '../utils/PrefetchUtil'
+import { prefetchComponentData } from '../utils/PrefetchUtils'
 
 function handleRequest(req, res) {
   const location = createLocation(req.url)
@@ -19,8 +19,10 @@ function handleRequest(req, res) {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
-      fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
+      prefetchComponentData(store.dispatch, renderProps.components, renderProps.params)
         .then(() => {
+          console.log('Prefetch finished!')
+
           const InitialComponent = (
             <Provider store={store}>
               <RoutingContext {...renderProps} />
@@ -29,8 +31,6 @@ function handleRequest(req, res) {
 
           const component = renderToString(InitialComponent)
           const initialState = store.getState()
-          
-          console.log('finisheddd!!')
 
           renderProps.routes.filter(route => {
             if (route.status == 404) res.status(404)
@@ -41,8 +41,11 @@ function handleRequest(req, res) {
             initialState: JSON.stringify(initialState)
           })
         })
+      .catch(() => {
+        res.status(500).send('Internal Server Error')
+      })
     } else {
-      res.status(404).send('Not found')
+      res.status(404).send('Not Found')
     }
   })
 }

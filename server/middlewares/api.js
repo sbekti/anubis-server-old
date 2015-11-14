@@ -8,6 +8,8 @@ router.get('/', function(req, res, next) {
   setTimeout(() => {
     res.json(data)
   }, 1000)
+
+  // res.status(500).send('Error')
 })
 
 export default router

@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var Clean = require('clean-webpack-plugin')
 
 module.exports = {
 
@@ -10,9 +11,9 @@ module.exports = {
   ],
 
   output: {
-    path: path.join(__dirname, 'assets'),
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/assets/'
+    publicPath: '/'
   },
 
   module: {
@@ -24,6 +25,7 @@ module.exports = {
   },
 
   plugins: [
+    new Clean(['dist']),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {

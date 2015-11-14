@@ -5,16 +5,13 @@ class DeviceListView extends React.Component {
 
   constructor(props) {
     super(props)
-
-    this.handleEdit = this.handleEdit.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
   }
 
-  handleEdit(id, text) {
+  _handleEdit = (id, text) => {
     this.props.onEdit(id, text)
   }
 
-  handleDelete(id) {
+  _handleDelete = (id) => {
     this.props.onDelete(id)
   }
 
@@ -28,8 +25,8 @@ class DeviceListView extends React.Component {
                 key={index}
                 id={index}
                 text={device}
-                onEdit={this.handleEdit}
-                onDelete={this.handleDelete}
+                onEdit={this._handleEdit}
+                onDelete={this._handleDelete}
               />
             )
           }.bind(this))

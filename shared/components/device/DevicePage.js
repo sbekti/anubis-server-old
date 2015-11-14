@@ -1,65 +1,67 @@
 import React from 'react'
 import DeviceListView from './DeviceListView'
 import DeviceForm from './DeviceForm'
+import DeviceLoadingIndicator from './DeviceLoadingIndicator'
 
-import { bindActionCreators } from 'redux'
-import * as DeviceActions from '../../actions/DeviceActions'
 import { connect } from 'react-redux'
+import * as DeviceActions from '../../actions/DeviceActions'
 
 const API_URL = 'http://localhost:3000/api/v1'
 
 function mapStateToProps(state) {
-  return { devices: state.devices }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(DeviceActions, dispatch)
+  return { device: state.device }
 }
 
 class DevicePage extends React.Component {
 
   static fetchInitialData = () => {
-    let actionPromises = []
+    let actions = []
 
-    actionPromises.push(DeviceActions.fetchAllDevices(API_URL))
+    actions.push(DeviceActions.fetchAllDevices(API_URL))
 
-    return actionPromises
+    return actions
   }
 
   constructor(props) {
     super(props)
-
-    this.handleEdit = this.handleEdit.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleEdit(id, text) {
-    this.props.editDevice(id, text)
+  componentDidMount() {
+    this.props.dispatch(DeviceActions.fetchAllDevicesIfNeeded(API_URL))
   }
 
-  handleDelete(id) {
-    this.props.deleteDevice(id)
+  _handleEdit = (id, text) => {
+    this.props.dispatch(DeviceActions.editDevice(id, text))
   }
 
-  handleSubmit(text) {
-    this.props.createDevice(text)
+  _handleDelete = (id) => {
+    this.props.dispatch(DeviceActions.deleteDevice(id))
+  }
+
+  _handleSubmit = (text) => {
+    this.props.dispatch(DeviceActions.createDevice(text))
   }
 
   render() {
-    const { devices, dispatch } = this.props;
+    const { device, dispatch } = this.props
+
+    if (device.isFetching) {
+      return (
+        <DeviceLoadingIndicator />
+      )
+    }
 
     return (
       <div id='device-list'>
         <DeviceListView
-          devices={devices}
-          onEdit={this.handleEdit}
-          onDelete={this.handleDelete}
+          devices={device.list}
+          onEdit={this._handleEdit}
+          onDelete={this._handleDelete}
         />
-        <DeviceForm onSubmit={this.handleSubmit} />
+        <DeviceForm onSubmit={this._handleSubmit} />
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DevicePage)
+export default connect(mapStateToProps)(DevicePage)
