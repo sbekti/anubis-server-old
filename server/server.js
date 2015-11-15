@@ -2,8 +2,9 @@ import path from 'path'
 import express from 'express'
 import bodyParser from 'body-parser'
 import serveFavicon from 'serve-favicon'
-import api from './middlewares/api'
+import devices from './middlewares/devices'
 import www from './middlewares/www'
+import models from './models'
 
 const app = express()
 
@@ -20,7 +21,7 @@ app.use(express.static(path.join(__dirname, '../assets')))
 app.use(express.static(path.join(__dirname, '../dist')))
 
 // API middleware
-app.use('/api/v1', api)
+app.use('/api/v1/devices', devices)
 
 // Frontend middleware
 app.use('/', www)
@@ -32,9 +33,11 @@ app.use((err, req, res, next) => {
   res.status(500).send('Internal server error')
 })
 
-const server = app.listen(app.get('port'), () => {
-  const host = server.address().address
-  const port = server.address().port
+models.sequelize.sync().then(() => {
+  const server = app.listen(app.get('port'), () => {
+    const host = server.address().address
+    const port = server.address().port
 
-  console.log(`Server is running at http://${host}:${port}`)
+    console.log(`Server is running at http://${host}:${port}`)
+  })
 })

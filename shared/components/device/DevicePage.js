@@ -6,8 +6,6 @@ import DeviceLoadingIndicator from './DeviceLoadingIndicator'
 import { connect } from 'react-redux'
 import * as DeviceActions from '../../actions/DeviceActions'
 
-const API_URL = 'http://localhost:3000/api/v1'
-
 function mapStateToProps(state) {
   return { device: state.device }
 }
@@ -17,7 +15,7 @@ class DevicePage extends React.Component {
   static fetchInitialData = () => {
     let actions = []
 
-    actions.push(DeviceActions.fetchAllDevices(API_URL))
+    actions.push(DeviceActions.fetchAllDevices())
 
     return actions
   }
@@ -27,19 +25,19 @@ class DevicePage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(DeviceActions.fetchAllDevicesIfNeeded(API_URL))
+    this.props.dispatch(DeviceActions.fetchAllDevicesIfNeeded())
   }
 
-  _handleEdit = (id, text) => {
-    this.props.dispatch(DeviceActions.editDevice(id, text))
+  _handleEdit = (id, name, state) => {
+    this.props.dispatch(DeviceActions.editDevice(id, name, state))
   }
 
   _handleDelete = (id) => {
     this.props.dispatch(DeviceActions.deleteDevice(id))
   }
 
-  _handleSubmit = (text) => {
-    this.props.dispatch(DeviceActions.createDevice(text))
+  _handleSubmit = (name, state) => {
+    this.props.dispatch(DeviceActions.createDevice(name, state))
   }
 
   render() {
@@ -54,7 +52,7 @@ class DevicePage extends React.Component {
     return (
       <div id='device-list'>
         <DeviceListView
-          devices={device.list}
+          data={device.data}
           onEdit={this._handleEdit}
           onDelete={this._handleDelete}
         />

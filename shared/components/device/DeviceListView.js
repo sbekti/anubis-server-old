@@ -7,8 +7,8 @@ class DeviceListView extends React.Component {
     super(props)
   }
 
-  _handleEdit = (id, text) => {
-    this.props.onEdit(id, text)
+  _handleEdit = (id, name, state) => {
+    this.props.onEdit(id, name, state)
   }
 
   _handleDelete = (id) => {
@@ -16,20 +16,23 @@ class DeviceListView extends React.Component {
   }
 
   render() {
+    const { data } = this.props
+
     return (
       <div>
         {
-          this.props.devices.map(function(device, index) {
+          data.map(device => {
             return (
               <DeviceItem
-                key={index}
-                id={index}
-                text={device}
+                key={device.id}
+                id={device.id}
+                name={device.name}
+                state={device.state}
                 onEdit={this._handleEdit}
                 onDelete={this._handleDelete}
               />
             )
-          }.bind(this))
+          })
         }
       </div>
     )

@@ -13,17 +13,20 @@ class DeviceItem extends React.Component {
 
   _handleEdit = () => {
     const id = this.props.id
-    const currentVal = this.props.text
+    const currentName = this.props.name
+    const currentState = this.props.state
 
-    let text = window.prompt('', currentVal)
+    const name = window.prompt('', currentName)
+    const state = parseInt(window.prompt('', currentState))
 
-    this.props.onEdit(id, text)
+    this.props.onEdit(id, name, state)
   }
 
   render() {
     return (
       <div>
-        {this.props.text}
+        <span>{this.props.name}</span>
+        <span>{this.props.state}</span>
         <button onClick={this._handleEdit}>Edit</button>
         <button onClick={this._handleDelete}>X</button>
       </div>

@@ -1,51 +1,86 @@
-import Immutable from 'immutable'
-
-import {
-  DEVICE_FETCH_ALL_PENDING,
-  DEVICE_FETCH_ALL_FULFILLED,
-  DEVICE_FETCH_ALL_REJECTED,
-  DEVICE_CREATE,
-  DEVICE_EDIT,
-  DEVICE_DELETE
-} from '../actions/DeviceActions'
+import * as DeviceConstants from '../constants/DeviceConstants'
 
 const defaultState = {
   isPrefetched: false,
   isFetching: false,
-  list: new Immutable.List()
+  data: []
 }
 
 export default function device(state = defaultState, action) {
 
-  switch(action.type) {
-    case DEVICE_FETCH_ALL_PENDING:
+  switch (action.type) {
+
+    case DeviceConstants.DEVICE_FETCH_ALL_PENDING: {
       return Object.assign({}, state, {
         isFetching: true
       })
-    case DEVICE_FETCH_ALL_FULFILLED:
+    }
+
+    case DeviceConstants.DEVICE_FETCH_ALL_FULFILLED: {
       return Object.assign({}, state, {
         isPrefetched: true,
         isFetching: false,
-        list: Immutable.fromJS(action.payload.data)
+        data: action.payload.data
       })
-    case DEVICE_FETCH_ALL_REJECTED:
+    }
+
+    case DeviceConstants.DEVICE_FETCH_ALL_REJECTED: {
       return Object.assign({}, state, {
         isFetching: false
       })
-    case DEVICE_CREATE:
-      return Object.assign({}, state, {
-        list: state.list.concat(action.text)
-      })
-    case DEVICE_EDIT:
-      return Object.assign({}, state, {
-        list: state.list.set(action.id, action.text)
-      })
-    case DEVICE_DELETE:
-      return Object.assign({}, state, {
-        list: state.list.delete(action.id)
-      })
-    default:
+    }
+
+    case DeviceConstants.DEVICE_CREATE_PENDING: {
       return state
+    }
+
+    case DeviceConstants.DEVICE_CREATE_FULFILLED: {
+      return Object.assign({}, state, {
+        data: [...state.data, action.payload.data]
+      })
+    }
+
+    case DeviceConstants.DEVICE_CREATE_REJECTED: {
+      return state
+    }
+
+    case DeviceConstants.DEVICE_EDIT_PENDING: {
+      return state
+    }
+
+    case DeviceConstants.DEVICE_EDIT_FULFILLED: {
+      return Object.assign({}, state, {
+        data: state.data.map(device =>
+          device.id === action.meta.id ? Object.assign({}, device, {
+            name: action.meta.name,
+            state: action.meta.state
+          }) : device
+        )
+      })
+    }
+
+    case DeviceConstants.DEVICE_EDIT_REJECTED: {
+      return state
+    }
+
+    case DeviceConstants.DEVICE_DELETE_PENDING: {
+      return state
+    }
+
+    case DeviceConstants.DEVICE_DELETE_FULFILLED: {
+      return Object.assign({}, state, {
+        data: state.data.filter(device => device.id !== action.meta.id)
+      })
+    }
+
+    case DeviceConstants.DEVICE_DELETE_REJECTED: {
+      return state
+    }
+
+    default: {
+      return state
+    }
+
   }
 
 }
