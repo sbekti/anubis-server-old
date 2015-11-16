@@ -24,11 +24,16 @@ class DeviceItem extends React.Component {
 
   render() {
     return (
-      <div>
-        <span>{this.props.name}</span>
-        <span>{this.props.state}</span>
-        <button onClick={this._handleEdit}>Edit</button>
-        <button onClick={this._handleDelete}>X</button>
+      <div className='panel panel-default'>
+        <div className='panel-heading'>
+          <h3 className='panel-title'>{this.props.name}</h3>
+        </div>
+        <div className='panel-body'>
+          <p>State: {this.props.state}</p>
+          <button className='btn btn-default' onClick={this._handleEdit}>Edit</button>
+          &nbsp;
+          <button className='btn btn-danger' onClick={this._handleDelete}>Delete</button>
+        </div>
       </div>
     )
   }

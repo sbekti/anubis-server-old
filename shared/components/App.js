@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, IndexLink } from 'react-router'
+import NavBar from './common/NavBar'
 
 class App extends React.Component {
 
@@ -10,13 +10,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>App</h1>
-        <ul>
-          <li><IndexLink to='/'>Home</IndexLink></li>
-          <li><Link to='/devices'>Devices</Link></li>
-          <li><Link to='/auth/login'>Login</Link></li>
-        </ul>
-        {this.props.children}
+        <NavBar />
+        <div className='container'>
+          {this.props.children}
+        </div>
       </div>
     )
   }

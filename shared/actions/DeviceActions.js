@@ -46,8 +46,10 @@ export function createDevice(name, state) {
         state: state
       })
     },
-    name,
-    state
+    meta: {
+      name,
+      state
+    }
   }
 }
 

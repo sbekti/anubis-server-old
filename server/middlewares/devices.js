@@ -1,8 +1,8 @@
 import express from 'express'
 import models from '../models'
-const Device = models.Device
 
 const router = express.Router()
+const Device = models.Device
 
 router.get('/', (req, res) => {
   Device.findAll()
@@ -28,13 +28,6 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   const device = req.body
 
-  if (device.hasOwnProperty('id') ||
-      device.hasOwnProperty('createdAt') ||
-      device.hasOwnProperty('updatedAt')) {
-    res.status(400).end()
-    return
-  }
-
   if (!device.hasOwnProperty('name')) {
     res.status(400).end()
     return
@@ -55,9 +48,14 @@ router.post('/', (req, res) => {
     return
   }
 
-  Device.create(device)
-    .then(device => {
-      res.json(device)
+  const newDevice = {
+    name: device.name,
+    state: device.state
+  }
+
+  Device.create(newDevice)
+    .then(newDeviceInstance => {
+      res.json(newDeviceInstance)
     })
 })
 
@@ -65,17 +63,27 @@ router.put('/:id', (req, res) => {
   const id = req.params.id
   const device = req.body
 
-  if (device.hasOwnProperty('name') && (typeof(device.name) !== 'string')) {
-    res.status(400).end()
-    return
+  let newDevice = {}
+
+  if (device.hasOwnProperty('name')) {
+    if (typeof(device.name) !== 'string') {
+      res.status(400).end()
+      return
+    }
+
+    newDevice.name = device.name
   }
 
-  if (device.hasOwnProperty('state') && (typeof(device.state) !== 'number')) {
-    res.status(400).end()
-    return
+  if (device.hasOwnProperty('state')) {
+    if (typeof(device.state) !== 'number') {
+      res.status(400).end()
+      return
+    }
+
+    newDevice.state = device.state
   }
 
-  Device.update(device, {
+  Device.update(newDevice, {
     where: {
       id: id
     }

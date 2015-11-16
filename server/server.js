@@ -2,6 +2,8 @@ import path from 'path'
 import express from 'express'
 import bodyParser from 'body-parser'
 import serveFavicon from 'serve-favicon'
+import verifier from './middlewares/verifier'
+import auth from './middlewares/auth'
 import devices from './middlewares/devices'
 import www from './middlewares/www'
 import models from './models'
@@ -18,10 +20,13 @@ app.set('view engine', 'jade')
 app.use(bodyParser.json())
 //app.use(serveFavicon(`${assetsPath}/assets/favicon.png`))
 app.use(express.static(path.join(__dirname, '../assets')))
-app.use(express.static(path.join(__dirname, '../dist')))
+app.use('/scripts', express.static(path.join(__dirname, '../dist')))
 
-// API middleware
-app.use('/api/v1/devices', devices)
+// Auth API middleware
+app.use('/api/v1/auth', auth)
+
+// Device API middleware
+app.use('/api/v1/devices', verifier, devices)
 
 // Frontend middleware
 app.use('/', www)
@@ -33,7 +38,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Internal server error')
 })
 
-models.sequelize.sync().then(() => {
+models.sequelize.sync({ force: true }).then(() => {
   const server = app.listen(app.get('port'), () => {
     const host = server.address().address
     const port = server.address().port

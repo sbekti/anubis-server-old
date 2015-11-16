@@ -50,13 +50,15 @@ class DevicePage extends React.Component {
     }
 
     return (
-      <div id='device-list'>
+      <div>
         <DeviceListView
           data={device.data}
           onEdit={this._handleEdit}
           onDelete={this._handleDelete}
         />
-        <DeviceForm onSubmit={this._handleSubmit} />
+        <DeviceForm
+          onSubmit={this._handleSubmit}
+        />
       </div>
     )
   }
