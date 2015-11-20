@@ -1,7 +1,7 @@
 import request from 'axios'
 import * as AuthConstants from '../constants/AuthConstants'
 
-const API_BASE_URL = 'http://localhost:3000/api/v1/auth'
+const API_BASE_URL = '/api/v1/auth'
 
 export function signIn(email, password) {
   return {

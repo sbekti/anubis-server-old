@@ -1,4 +1,4 @@
-export function prefetchComponentData(dispatch, components, params) {
+export function prefetchComponentData(components, locals) {
   let actions = []
 
   for (const prop in components) {
@@ -14,7 +14,7 @@ export function prefetchComponentData(dispatch, components, params) {
 
   console.log('actions: ', actions)
 
-  const promises = actions.map(action => dispatch(action))
+  const promises = actions.map(action => locals.dispatch(action))
 
   return Promise.all(promises);
 }

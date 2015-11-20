@@ -24,7 +24,7 @@ module.exports = {
         path.resolve(__dirname, 'shared')
       ],
       exclude: /node_modules/,
-      loader: 'babel'
+      loader: 'babel-loader'
     }]
   },
 

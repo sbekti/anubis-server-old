@@ -9,6 +9,16 @@ class DeviceForm extends React.Component {
     this.state = {
       error: false
     }
+
+    console.log('DeviceForm constructor')
+  }
+
+  componentWillMount() {
+    console.log('DeviceForm componentWillMount')
+  }
+
+  componentDidMount() {
+    console.log('DeviceForm componentDidMount')
   }
 
   _handleSubmit = (e) => {
@@ -27,6 +37,8 @@ class DeviceForm extends React.Component {
   }
 
   render() {
+    console.log('DeviceForm render')
+
     const formGroupClass = classNames({
       'form-group': true,
       'has-error': this.state.error

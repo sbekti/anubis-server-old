@@ -1,8 +1,8 @@
 import express from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import config from '../config/auth'
 import models from '../models'
+import config from '../config/auth'
 
 const router = express.Router()
 const User = models.User

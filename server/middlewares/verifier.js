@@ -40,13 +40,12 @@ router.use((req, res, next) => {
     res.status(400).end()
   } else {
     jwt.verify(token, config.JWT_SECRET_KEY, (tokenError, decoded) => {
-      // if (tokenError) {
-      //   res.status(401).end()
-      //   return
-      // } else {
-      //   next()
-      // }
-      next()
+      if (tokenError) {
+        res.status(401).end()
+        return
+      } else {
+        next()
+      }
     })
   }
 })

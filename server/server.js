@@ -1,6 +1,7 @@
 import path from 'path'
 import express from 'express'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 import serveFavicon from 'serve-favicon'
 import verifier from './middlewares/verifier'
 import auth from './middlewares/auth'
@@ -18,6 +19,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
 app.use(bodyParser.json())
+app.use(cookieParser())
 //app.use(serveFavicon(`${assetsPath}/assets/favicon.png`))
 app.use(express.static(path.join(__dirname, '../assets')))
 app.use('/scripts', express.static(path.join(__dirname, '../dist')))
@@ -38,7 +40,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Internal server error')
 })
 
-models.sequelize.sync({ force: true }).then(() => {
+models.sequelize.sync({ force: false }).then(() => {
   const server = app.listen(app.get('port'), () => {
     const host = server.address().address
     const port = server.address().port

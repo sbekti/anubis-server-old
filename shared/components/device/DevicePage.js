@@ -7,28 +7,35 @@ import { connect } from 'react-redux'
 import * as DeviceActions from '../../actions/DeviceActions'
 
 function mapStateToProps(state) {
-  return { device: state.device }
+  return {
+    device: state.device
+  }
 }
 
 class DevicePage extends React.Component {
 
   static fetchInitialData = () => {
-    let actions = []
-
-    actions.push(DeviceActions.fetchAllDevices())
-
-    return actions
+    return [
+      DeviceActions.fetchAllDevices()
+    ]
   }
 
   constructor(props) {
+    console.log('DevicePage constructor')
     super(props)
   }
 
+  componentWillMount() {
+    console.log('DevicePage componentWillMount')
+  }
+
   componentDidMount() {
+    console.log('DevicePage componentDidMount')
     this.props.dispatch(DeviceActions.fetchAllDevicesIfNeeded())
   }
 
   _handleEdit = (id, name, state) => {
+    console.log(this)
     this.props.dispatch(DeviceActions.editDevice(id, name, state))
   }
 
@@ -41,6 +48,8 @@ class DevicePage extends React.Component {
   }
 
   render() {
+    console.log('DevicePage render')
+
     const { device, dispatch } = this.props
 
     if (device.isFetching) {

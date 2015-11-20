@@ -1,17 +1,20 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RoutingContext } from 'react-router'
-import createLocation from 'history/lib/createLocation'
-import routes from '../../shared/routes'
-
 import { Provider } from 'react-redux'
-import configureStore from '../../shared/store/configureStore'
+import { createLocation } from 'history'
 
+import routes from '../../shared/routes'
+import configureStore from '../../shared/store/configureStore'
 import { prefetchComponentData } from '../utils/PrefetchUtils'
+import { createInitialStateWithAuth } from '../utils/AuthInjector'
 
 function handleRequest(req, res) {
+  console.log(req.cookies)
+
   const location = createLocation(req.url)
-  const store = configureStore()
+  const initialState = createInitialStateWithAuth(req.cookies)
+  const store = configureStore(initialState)
 
   match({ routes, location }, (error, redirectLocation, renderProps) => {
     if (error) {
@@ -19,7 +22,16 @@ function handleRequest(req, res) {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
-      prefetchComponentData(store.dispatch, renderProps.components, renderProps.params)
+      const { dispatch } = store
+
+      const locals = {
+        path: renderProps.location.pathname,
+        query: renderProps.location.query,
+        params: renderProps.params,
+        dispatch
+      }
+
+      prefetchComponentData(renderProps.components, locals)
         .then(() => {
           console.log('Prefetch finished!')
 
@@ -40,6 +52,9 @@ function handleRequest(req, res) {
             component: component,
             initialState: JSON.stringify(initialState)
           })
+        })
+        .catch(err => {
+          console.log(err)
         })
       .catch(() => {
         res.status(500).send('Internal Server Error')

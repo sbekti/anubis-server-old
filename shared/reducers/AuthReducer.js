@@ -1,7 +1,9 @@
+import Cookies from 'cookies-js'
 import * as AuthConstants from '../constants/AuthConstants'
 
 const defaultState = {
   accessToken: '',
+  isAuthenticated: false,
   isRequesting: false,
   isError: false
 }
@@ -19,8 +21,11 @@ export default function auth(state = defaultState, action) {
     case AuthConstants.AUTH_SIGN_IN_FULFILLED: {
       const accessToken = action.payload.data.access_token
 
+      Cookies.set('access_token', accessToken)
+
       return Object.assign({}, state, {
         accessToken: accessToken,
+        isAuthenticated: true,
         isError: false,
         isRequesting: false
       })
