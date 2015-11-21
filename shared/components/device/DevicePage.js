@@ -21,21 +21,14 @@ class DevicePage extends React.Component {
   }
 
   constructor(props) {
-    console.log('DevicePage constructor')
     super(props)
   }
 
-  componentWillMount() {
-    console.log('DevicePage componentWillMount')
-  }
-
   componentDidMount() {
-    console.log('DevicePage componentDidMount')
     this.props.dispatch(DeviceActions.fetchAllDevicesIfNeeded())
   }
 
   _handleEdit = (id, name, state) => {
-    console.log(this)
     this.props.dispatch(DeviceActions.editDevice(id, name, state))
   }
 
@@ -48,8 +41,6 @@ class DevicePage extends React.Component {
   }
 
   render() {
-    console.log('DevicePage render')
-
     const { device, dispatch } = this.props
 
     if (device.isFetching) {

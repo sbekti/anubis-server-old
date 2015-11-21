@@ -8,12 +8,14 @@ import auth from './middlewares/auth'
 import devices from './middlewares/devices'
 import www from './middlewares/www'
 import models from './models'
+import serverConfig from './config/server'
+import middlewaresConfig from './config/middlewares'
 
 const app = express()
 
-app.set('env', process.env.NODE_ENV || 'development')
-app.set('host', process.env.HOST || '0.0.0.0')
-app.set('port', process.env.PORT || 3000)
+app.set('env', serverConfig.SERVER_ENV)
+app.set('host', serverConfig.SERVER_HOST)
+app.set('port', serverConfig.SERVER_PORT)
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
@@ -25,13 +27,13 @@ app.use(express.static(path.join(__dirname, '../assets')))
 app.use('/scripts', express.static(path.join(__dirname, '../dist')))
 
 // Auth API middleware
-app.use('/api/v1/auth', auth)
+app.use(middlewaresConfig.API_AUTH_ENDPOINT, auth)
 
 // Device API middleware
-app.use('/api/v1/devices', verifier, devices)
+app.use(middlewaresConfig.API_DEVICES_ENDPOINT, verifier, devices)
 
 // Frontend middleware
-app.use('/', www)
+app.use(middlewaresConfig.WWW_ENDPOINT, www)
 
 app.use((err, req, res, next) => {
   console.log('Error on request %s %s', req.method, req.url)

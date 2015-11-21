@@ -1,7 +1,9 @@
 import request from 'axios'
+import { normalizeURL } from '../utils/URLUtils'
+import middlewaresConfig from '../../server/config/middlewares'
 import * as DeviceConstants from '../constants/DeviceConstants'
 
-const API_BASE_URL = '/api/v1/devices'
+const API_BASE_URL = normalizeURL(middlewaresConfig.API_DEVICES_ENDPOINT)
 
 function shouldFetchAllDevices(storeState) {
   if (storeState.device.isPrefetched) {

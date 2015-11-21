@@ -13,29 +13,18 @@ class SignInPage extends React.Component {
 
   constructor(props) {
     super(props)
-
-    let redirectTo = '/'
-    const query = this.props.location.query
-
-    if ((query) && (query.hasOwnProperty('next'))) {
-      redirectTo = query.next
-    }
-
-    this.state = {
-      redirectTo: redirectTo
-    }
-  }
-
-  componentWillMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.pushState(null, this.state.redirectTo)
-    }
   }
 
   componentWillReceiveProps(nextProps) {
     if ((nextProps.auth.isAuthenticated) &&
         (!this.props.auth.isAuthenticated)) {
-      this.props.history.pushState(null, this.state.redirectTo)
+      const { location } = this.props
+
+      if (location.state && location.state.nextPathname) {
+        this.props.history.replaceState(null, location.state.nextPathname)
+      } else {
+        this.props.history.replaceState(null, '/')
+      }
     }
   }
 

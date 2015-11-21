@@ -4,17 +4,16 @@ import { match, RoutingContext } from 'react-router'
 import { Provider } from 'react-redux'
 import { createLocation } from 'history'
 
-import routes from '../../shared/routes'
+import { configureRoutes } from '../../shared/routes'
 import configureStore from '../../shared/store/configureStore'
 import { prefetchComponentData } from '../utils/PrefetchUtils'
 import { createInitialStateWithAuth } from '../utils/AuthInjector'
 
 function handleRequest(req, res) {
-  console.log(req.cookies)
-
   const location = createLocation(req.url)
   const initialState = createInitialStateWithAuth(req.cookies)
   const store = configureStore(initialState)
+  const routes = configureRoutes(store)
 
   match({ routes, location }, (error, redirectLocation, renderProps) => {
     if (error) {
@@ -33,8 +32,6 @@ function handleRequest(req, res) {
 
       prefetchComponentData(renderProps.components, locals)
         .then(() => {
-          console.log('Prefetch finished!')
-
           const InitialComponent = (
             <Provider store={store}>
               <RoutingContext {...renderProps} />

@@ -12,9 +12,7 @@ export function prefetchComponentData(components, locals) {
     }
   }
 
-  console.log('actions: ', actions)
-
   const promises = actions.map(action => locals.dispatch(action))
 
-  return Promise.all(promises);
+  return Promise.all(promises)
 }
