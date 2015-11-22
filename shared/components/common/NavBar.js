@@ -7,6 +7,22 @@ class NavBar extends React.Component {
     super(props)
   }
 
+  componentDidMount() {
+    $('.navbar-brand').click(() => {
+      if ($('.collapse.in')) {
+        $('.collapse.in').animate({height: '1px'}, 300, () => {
+          $('.collapse.in').removeClass('in')
+        })
+      }
+    })
+
+    $(document).on('click', '.navbar-collapse.in', (e) => {
+      if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') {
+        $('.navbar-collapse.in').collapse('hide')
+      }
+    })
+  }
+
   render() {
     return (
       <nav className='navbar navbar-default navbar-fixed-top'>

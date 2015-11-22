@@ -34,6 +34,7 @@
     "cookie-parser": "^1.4.0",
     "cookies-js": "^1.2.2",
     "express": "^4.13.3",
+    "fastclick": "^1.0.6",
     "history": "^1.13.1",
     "jade": "^1.11.0",
     "jsonwebtoken": "^5.4.1",

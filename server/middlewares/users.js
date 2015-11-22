@@ -10,6 +10,16 @@ const User = models.User
 router.post('/signup', (req, res) => {
   const user = req.body
 
+  if (!user.hasOwnProperty('name')) {
+    res.status(400).end()
+    return
+  }
+
+  if (typeof(user.name) !== 'string') {
+    res.status(400).end()
+    return
+  }
+
   if (!user.hasOwnProperty('email')) {
     res.status(400).end()
     return
@@ -42,6 +52,7 @@ router.post('/signup', (req, res) => {
 
     bcrypt.hash(user.password, config.BCRYPT_NUM_ROUNDS, (err, hash) => {
       const newUser = {
+        name: user.name,
         email: user.email,
         hash: hash
       }
@@ -94,6 +105,8 @@ router.post('/signin', (req, res) => {
       }
 
       const tokenPayload = {
+        id: existingUser.id,
+        name: existingUser.name,
         email: existingUser.email
       }
 

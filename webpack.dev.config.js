@@ -19,10 +19,6 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      include: [
-        path.resolve(__dirname, 'client'),
-        path.resolve(__dirname, 'shared')
-      ],
       exclude: /node_modules/,
       loader: 'babel-loader'
     }]

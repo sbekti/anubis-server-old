@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { Router } from 'react-router'
 import { Provider } from 'react-redux'
 import { createHistory } from 'history'
+import FastClick from 'fastclick'
 
 import { configureRoutes } from '../shared/routes'
 import configureStore from '../shared/store/configureStore'
@@ -12,6 +13,8 @@ const initialState = rehydrateStore(window.__INITIAL_STATE__)
 const store = configureStore(initialState)
 const routes = configureRoutes(store)
 const history = createHistory()
+
+FastClick.attach(document.body)
 
 render(
   <Provider store={store}>

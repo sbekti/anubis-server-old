@@ -1,14 +1,21 @@
 import serverConfig from '../../server/config/server'
 
-function isNode() {
-  return Object.prototype.toString.call(global.process) === '[object process]'
+export function isBrowser() {
+  return typeof window !== 'undefined'
+}
+
+export function isNode() {
+  return typeof window === 'undefined' && typeof process !== 'undefined'
+}
+
+export function isWebWorker() {
+  return typeof self !== 'undefined' && typeof postMessage === 'function'
 }
 
 export function normalizeURL(url) {
-  if (!isNode) {
-    return url
+  if (isNode()) {
+    return `http://127.0.0.1:${serverConfig.SERVER_PORT}${url}`
   } else {
-    const newURL = `http://127.0.0.1:${serverConfig.SERVER_PORT}${url}`
-    return newURL
+    return url
   }
 }

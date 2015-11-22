@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import serveFavicon from 'serve-favicon'
 import verifier from './middlewares/verifier'
-import auth from './middlewares/auth'
+import users from './middlewares/users'
 import devices from './middlewares/devices'
 import www from './middlewares/www'
 import models from './models'
@@ -26,8 +26,8 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../assets')))
 app.use('/scripts', express.static(path.join(__dirname, '../dist')))
 
-// Auth API middleware
-app.use(middlewaresConfig.API_AUTH_ENDPOINT, auth)
+// Users API middleware
+app.use(middlewaresConfig.API_USERS_ENDPOINT, users)
 
 // Device API middleware
 app.use(middlewaresConfig.API_DEVICES_ENDPOINT, verifier, devices)
@@ -42,7 +42,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Internal server error')
 })
 
-models.sequelize.sync({ force: false }).then(() => {
+models.sequelize.sync({ force: true }).then(() => {
   const server = app.listen(app.get('port'), () => {
     const host = server.address().address
     const port = server.address().port
