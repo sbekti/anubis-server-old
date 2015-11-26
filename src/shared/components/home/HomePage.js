@@ -1,4 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
+function mapStateToProps(state) {
+  return { user: state.user }
+}
 
 class HomePage extends React.Component {
 
@@ -7,10 +12,14 @@ class HomePage extends React.Component {
   }
 
   render() {
+    const { user } = this.props
+    const userName = typeof(user.details.name) !== 'undefined' ?
+      user.details.name : 'visitor'
+
     return (
-      <h1>Hello, visitor!</h1>
+      <h1>Hello, {userName}!</h1>
     )
   }
 }
 
-export default HomePage
+export default connect(mapStateToProps)(HomePage)
