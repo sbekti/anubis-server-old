@@ -7,7 +7,7 @@ module.exports = {
   devtool: 'eval',
 
   entry: [
-    './client/index.js'
+    './src/client/index.js'
   ],
 
   output: {

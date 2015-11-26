@@ -7,7 +7,7 @@ module.exports = {
   devtool: 'source-map',
 
   entry: [
-    './client/index.js'
+    './src/client/index.js'
   ],
 
   output: {
