@@ -64,11 +64,11 @@ export default function device(state = defaultState, action) {
       return state
     }
 
-    case DeviceConstants.DEVICE_EDIT_PENDING: {
+    case DeviceConstants.DEVICE_UPDATE_PENDING: {
       return state
     }
 
-    case DeviceConstants.DEVICE_EDIT_FULFILLED: {
+    case DeviceConstants.DEVICE_UPDATE_FULFILLED: {
       return Object.assign({}, state, {
         data: state.data.map(device =>
           device.id === action.meta.id ? Object.assign({}, device, {
@@ -79,7 +79,7 @@ export default function device(state = defaultState, action) {
       })
     }
 
-    case DeviceConstants.DEVICE_EDIT_REJECTED: {
+    case DeviceConstants.DEVICE_UPDATE_REJECTED: {
       return state
     }
 

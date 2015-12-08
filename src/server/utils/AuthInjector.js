@@ -25,8 +25,8 @@ export function injectAccessToken(dispatch, cookies) {
         // This array will store all promises from actions for global prefetching
         let promises = []
 
-        // Fetch current user details
-        promises.push(dispatch(UserActions.fetchUserDetails(decodedToken.id)))
+        // Fetch current user
+        promises.push(dispatch(UserActions.fetchUser(decodedToken.id)))
 
         // Wait for all promises to resolve, then proceed to render
         Promise.all(promises).then(resolve)

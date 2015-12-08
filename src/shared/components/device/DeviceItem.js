@@ -12,7 +12,7 @@ class DeviceItem extends React.Component {
     this.props.onDelete(id)
   }
 
-  _handleEdit = () => {
+  _handleUpdate = () => {
     const id = this.props.id
     const currentName = this.props.name
     const currentState = this.props.state
@@ -20,7 +20,7 @@ class DeviceItem extends React.Component {
     const name = window.prompt('', currentName)
     const state = parseInt(window.prompt('', currentState))
 
-    this.props.onEdit(id, name, state)
+    this.props.onUpdate(id, name, state)
   }
 
   render() {
@@ -33,7 +33,7 @@ class DeviceItem extends React.Component {
         </div>
         <div className='panel-body'>
           <p>State: {this.props.state}</p>
-          <button className='btn btn-default' onClick={this._handleEdit}>Edit</button>
+          <button className='btn btn-default' onClick={this._handleUpdate}>Change</button>
           &nbsp;
           <button className='btn btn-danger' onClick={this._handleDelete}>Delete</button>
         </div>

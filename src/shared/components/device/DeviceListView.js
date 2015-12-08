@@ -7,8 +7,8 @@ class DeviceListView extends React.Component {
     super(props)
   }
 
-  _handleEdit = (id, name, state) => {
-    this.props.onEdit(id, name, state)
+  _handleUpdate = (id, name, state) => {
+    this.props.onUpdate(id, name, state)
   }
 
   _handleDelete = (id) => {
@@ -28,7 +28,7 @@ class DeviceListView extends React.Component {
                 id={device.id}
                 name={device.name}
                 state={device.state}
-                onEdit={this._handleEdit}
+                onUpdate={this._handleUpdate}
                 onDelete={this._handleDelete}
               />
             )

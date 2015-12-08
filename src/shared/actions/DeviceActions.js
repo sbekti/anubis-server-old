@@ -104,13 +104,13 @@ export function createDevice(name, state) {
   }
 }
 
-export function editDevice(id, name, state) {
+export function updateDevice(id, name, state) {
   return (dispatch, getState) => {
     const storeState = getState()
     const accessToken = storeState.auth.accessToken
 
     return dispatch({
-      type: DeviceConstants.DEVICE_EDIT,
+      type: DeviceConstants.DEVICE_UPDATE,
       payload: {
         promise: request.put(API_BASE_URL + `/${id}`, {
           name: name,

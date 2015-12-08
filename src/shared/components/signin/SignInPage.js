@@ -27,7 +27,7 @@ class SignInPage extends React.Component {
         history.replaceState(null, '/')
       }
 
-      dispatch(UserActions.fetchUserDetails(nextProps.auth.userId))
+      dispatch(UserActions.fetchUser(nextProps.auth.userId))
       dispatch(AuthActions.resetSignInCompletedFlag())
     }
   }

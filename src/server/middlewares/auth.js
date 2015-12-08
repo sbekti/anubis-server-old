@@ -109,9 +109,7 @@ router.post('/signin', (req, res) => {
       }
 
       const tokenPayload = {
-        id: existingUser.id,
-        name: existingUser.name,
-        email: existingUser.email
+        id: existingUser.id
       }
 
       const token = jwt.sign(tokenPayload, config.JWT_SECRET_KEY, {

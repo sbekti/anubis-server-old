@@ -26,8 +26,8 @@ class DevicePage extends React.Component {
     this.props.dispatch(DeviceActions.fetchAllDevicesIfNeeded())
   }
 
-  _handleEdit = (id, name, state) => {
-    this.props.dispatch(DeviceActions.editDevice(id, name, state))
+  _handleUpdate = (id, name, state) => {
+    this.props.dispatch(DeviceActions.updateDevice(id, name, state))
   }
 
   _handleDelete = (id) => {
@@ -52,7 +52,7 @@ class DevicePage extends React.Component {
         <DeviceForm onSubmit={this._handleSubmit} />
         <DeviceListView
           data={device.data}
-          onEdit={this._handleEdit}
+          onUpdate={this._handleUpdate}
           onDelete={this._handleDelete}
         />
       </div>

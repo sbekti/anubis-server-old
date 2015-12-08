@@ -24,8 +24,8 @@ class DeviceDetailsPage extends React.Component {
     this.props.dispatch(DeviceActions.fetchDeviceDetailsIfNeeded(this.props.routeParams.id))
   }
 
-  _handleEdit = (id, name, state) => {
-    this.props.dispatch(DeviceActions.editDevice(id, name, state))
+  _handleUpdate = (id, name, state) => {
+    this.props.dispatch(DeviceActions.updateDevice(id, name, state))
   }
 
   _handleDelete = (id) => {
@@ -40,7 +40,7 @@ class DeviceDetailsPage extends React.Component {
         id={details.id}
         name={details.name}
         state={details.state}
-        onEdit={this._handleEdit}
+        onUpdate={this._handleUpdate}
         onDelete={this._handleDelete}
       />
     )

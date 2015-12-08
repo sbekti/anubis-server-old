@@ -74,7 +74,7 @@ class SignUpForm extends React.Component {
       <form onSubmit={this._handleSubmit}>
         <div className={nameFormGroupClass}>
           <label htmlFor='signup-name-input' className='control-label'>Name</label>
-          <input type='text' className='form-control' readOnly={isReadOnly} id='signup-name-input' ref='signup-name-input' placeholder='Email' />
+          <input type='text' className='form-control' readOnly={isReadOnly} id='signup-name-input' ref='signup-name-input' placeholder='Name' />
         </div>
         <div className={emailFormGroupClass}>
           <label htmlFor='signup-email-input' className='control-label'>Email</label>

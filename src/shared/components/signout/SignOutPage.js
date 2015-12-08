@@ -16,7 +16,7 @@ class SignOutPage extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(AuthActions.signOut())
-    this.props.dispatch(UserActions.clearUserDetails())
+    this.props.dispatch(UserActions.clearUser())
 
     this.props.history.replaceState(null, '/')
   }
